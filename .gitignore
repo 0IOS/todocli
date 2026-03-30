@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+.todocli.json
+.todocli_undo.json
