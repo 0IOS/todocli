@@ -54,7 +54,9 @@ A fast, minimal, and powerful terminal-based TODO manager written in Python.
 git clone https://github.com/0IOS/todocli
 cd todocli
 chmod +x install.sh
-install.sh
+```
+```bash
+./install.sh
 ```
 
 ## Requirements
