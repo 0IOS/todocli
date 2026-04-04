@@ -11,6 +11,31 @@ init(autoreset=True)
 
 FILE = os.path.expanduser("~/.todocli.json")
 
+CONFIG_PATH = os.path.expanduser("~/.config/todocli/config.json")
+
+DEFAULT_CONFIG = {
+    "theme": "default",
+    "date_format": "%Y-%m-%d",
+    "show_completed": True,
+    "default_priority": "medium",
+    "progress_bar": True,
+    "color": True,
+    "compact_view": False,
+    "sort_default": "pending"
+}
+
+
+def load_config():
+    if not os.path.exists(CONFIG_PATH):
+        os.makedirs(os.path.dirname(CONFIG_PATH), exist_ok=True)
+        with open(CONFIG_PATH, "w") as f:
+            json.dump(DEFAULT_CONFIG, f, indent=4)
+        return DEFAULT_CONFIG
+
+    with open(CONFIG_PATH, "r") as f:
+        return json.load(f)
+config=load_config()
+
 def load_data():
     if not os.path.exists(FILE):
         return {"tasks": []}
