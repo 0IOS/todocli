@@ -55,6 +55,7 @@ git clone https://github.com/0IOS/todocli
 cd todocli
 chmod +x install.sh
 ```
+After running previous commands:
 ```bash
 ./install.sh
 ```
