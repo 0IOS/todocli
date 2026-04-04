@@ -50,19 +50,46 @@ A fast, minimal, and powerful terminal-based TODO manager written in Python.
 ---
 
 # Installation
+## Linux
 ```bash
 git clone https://github.com/0IOS/todocli
 cd todocli
 chmod +x install.sh
 ```
-After running previous commands:
+Then:
 ```bash
 ./install.sh
+```
+Restart your Terminal,then run:
+```bash
+todocli
+```
+## Windows
+```bash
+git clone https://github.com/0IOS/todocli
+cd todocli
+```
+Then:
+```powershell
+./install.ps1
+```
+If you get a execution policy error, run:
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+Then run again:
+```powershell
+./install.ps1
+```
+Restart Terminal/Powershell,then run:
+```bash
+todocli
 ```
 
 ## Requirements
 
 * Python 3.8+
+* Git
 * colorama
 
 Install dependencies:
