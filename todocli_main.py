@@ -11,7 +11,8 @@ init(autoreset=True)
 
 FILE = os.path.expanduser("~/.todocli.json")
 
-CONFIG_PATH = os.path.expanduser("~/.config/todocli/config.json")
+CONFIG_DIR = os.path.join(os.path.expanduser("~"), ".todocli")
+CONFIG_PATH = os.path.join(CONFIG_DIR, "config.json")
 
 DEFAULT_CONFIG = {
     "theme": "default",
@@ -24,15 +25,15 @@ DEFAULT_CONFIG = {
     "sort_default": "pending"
 }
 
-
 def load_config():
     if not os.path.exists(CONFIG_PATH):
-        os.makedirs(os.path.dirname(CONFIG_PATH), exist_ok=True)
+        os.makedirs(CONFIG_DIR, exist_ok=True)
         with open(CONFIG_PATH, "w") as f:
             json.dump(DEFAULT_CONFIG, f, indent=4)
         return DEFAULT_CONFIG
 
     with open(CONFIG_PATH, "r") as f:
+
         return json.load(f)
 config=load_config()
 
