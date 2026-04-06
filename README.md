@@ -294,9 +294,7 @@ Planned Features
 * Subtasks
 * Recurring tasks
 * Export / Import
-* Interactive mode
-* Custom columns
-
+* SQlite
 # Author
 
 Saurabh Gupta
