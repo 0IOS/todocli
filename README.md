@@ -11,7 +11,7 @@ A fast, minimal, and powerful terminal-based TODO manager written in Python.
 * Stats
 * Sorting
 * Multi-tag filtering
-* Cross-platform support (Linux + Windows)
+* Cross-platform support (Linux/Mac OS + Windows)
 
 ---
 
@@ -50,7 +50,7 @@ A fast, minimal, and powerful terminal-based TODO manager written in Python.
 ---
 
 # Installation
-## Linux
+## Linux/Mac OS
 ```bash
 git clone https://github.com/0IOS/todocli
 cd todocli
