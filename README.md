@@ -83,8 +83,9 @@ Then run again:
 ```
 Restart Terminal/Powershell,then run:
 ```bash
-todocli
+python todocli
 ```
+You have to change directory to todocli each time you open terminal
 
 ## Requirements
 
@@ -284,14 +285,6 @@ Works on:
 * Windows
 * macOS
 
-Windows users can run:
-
-```bash
-python todocli_main.py
-```
-
----
-
 # Roadmap
 
 Planned Features
@@ -303,14 +296,6 @@ Planned Features
 * Export / Import
 * Interactive mode
 * Custom columns
-
----
-
-# License
-
-MIT License
-
----
 
 # Author
 
