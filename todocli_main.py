@@ -49,14 +49,31 @@ def save_data(data):
         json.dump(data, f, indent=4)
 
 def save_undo_data(data):
-    with open(UNDOFILE, "w") as f0:
-        json.dump(data, f0, indent=4)
+    history = []
+    MAX_UNDO = 50
+
+    if os.path.exists(UNDOFILE):
+        with open(UNDOFILE, "r") as f:
+            history = json.load(f)
+
+    history.append(data)
+
+    if len(history) > MAX_UNDO:
+        history.pop(0)
+    with open(UNDOFILE, "w") as f:
+        json.dump(history, f, indent=4)
 
 def load_undo_data():
     if not os.path.exists(UNDOFILE):
-        return{"tasks": []}
-    with open(UNDOFILE, "r") as f0:
-        return json.load(f0)
+        return None
+
+    with open(UNDOFILE, "r") as f:
+        history = json.load(f)
+
+    if not history:
+        return None
+
+    return history
 
 def add_task(title,priority="medium",due=None,tags=None):
     data = load_data()
@@ -308,9 +325,18 @@ def search_task(keyword):
         print("No matching tasks")
 
 def undo():
-    data = load_undo_data()
-    save_undo_data()
-    save_data(data)
+    history = load_undo_data()
+
+    if not history:
+        print("Nothing to undo")
+        return
+
+    last = history.pop()
+
+    with open(UNDOFILE, "w") as f:
+        json.dump(history, f, indent=4)
+
+    save_data(last)
 
 
 def main():
