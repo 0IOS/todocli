@@ -10,6 +10,7 @@ from datetime import datetime
 init(autoreset=True)
 
 FILE = os.path.expanduser("~/.todocli.json")
+UNDOFILE = os.path.expanduser("~/.todocliundo.json")
 
 CONFIG_DIR = os.path.join(os.path.expanduser("~"), ".todocli")
 CONFIG_PATH = os.path.join(CONFIG_DIR, "config.json")
@@ -47,8 +48,19 @@ def save_data(data):
     with open(FILE, "w") as f:
         json.dump(data, f, indent=4)
 
+def save_undo_data(data):
+    with open(UNDOFILE, "w") as f0:
+        json.dump(data, f0, indent=4)
+
+def load_undo_data():
+    if not os.path.exists(UNDOFILE):
+        return{"tasks": []}
+    with open(UNDOFILE, "r") as f0:
+        return json.load(f0)
+
 def add_task(title,priority="medium",due=None,tags=None):
     data = load_data()
+    save_undo_data(data)
     task_id=str(uuid.uuid4())[:8]
     data["tasks"].append({"id":task_id,"title": title, "done": False,"priority":priority,"due":due,"tags":tags})
     save_data(data)
@@ -132,6 +144,7 @@ def view_tasks(sort=None,tag=None):
 
 def complete_task(task_id):
     data = load_data()
+    save_undo_data(data)
     for task in data["tasks"]:
         if task["id"] == task_id:
             task["done"] = True
@@ -141,15 +154,16 @@ def complete_task(task_id):
 
 def delete_task(task_id):
     data = load_data()
+    save_undo_data(data)
     for i, task in enumerate(data["tasks"]):
         if task["id"] == task_id:
             del data["tasks"][i]
             save_data(data)
             return
-    print("Invalid ID")
 
 def edit_task(task_id, title=None, priority=None, due=None, tags=None, done=None):
     data = load_data()
+    save_undo_data(data)
     tasks = data["tasks"]
 
     for task in tasks:
@@ -230,6 +244,7 @@ def stats_task():
 
 def clear_completed():
     data=load_data()
+    save_undo_data(data)
     tasks=data["tasks"]
     new_tasks=[j for j in tasks if not j["done"]]
     data["tasks"]=new_tasks
@@ -292,6 +307,11 @@ def search_task(keyword):
     if not found:
         print("No matching tasks")
 
+def undo():
+    data = load_undo_data()
+    save_undo_data()
+    save_data(data)
+
 
 def main():
     parser=argparse.ArgumentParser(prog="todocli")
@@ -329,6 +349,8 @@ def main():
 
     search_parser=subparser.add_parser("search")
     search_parser.add_argument("keyword", nargs="+")
+
+    undo_parser=subparser.add_parser("undo")
 
     args=parser.parse_args()
 
@@ -401,5 +423,9 @@ def main():
     elif args.command == "search":
         keyword=" ".join(args.keyword)
         search_task(keyword)
+
+    elif args.command == "undo":
+        undo()
+        print("Un-did the last operation")
 if __name__ == "__main__":
     main()
