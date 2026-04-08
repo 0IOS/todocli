@@ -23,7 +23,8 @@ DEFAULT_CONFIG = {
     "progress_bar": True,
     "color": True,
     "compact_view": False,
-    "sort_default": "pending"
+    "sort_default": "pending",
+    "Max_undo": 25
 }
 
 def load_config():
@@ -50,7 +51,7 @@ def save_data(data):
 
 def save_undo_data(data):
     history = []
-    MAX_UNDO = 50
+    MAX_UNDO = 25
 
     if os.path.exists(UNDOFILE):
         with open(UNDOFILE, "r") as f:
