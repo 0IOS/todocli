@@ -51,7 +51,8 @@ def save_data(data):
 
 def save_undo_data(data):
     history = []
-    MAX_UNDO = 25
+    config=load_config()
+    MAX_UNDO=config["Max_undo"]
 
     if os.path.exists(UNDOFILE):
         with open(UNDOFILE, "r") as f:
@@ -76,7 +77,7 @@ def load_undo_data():
 
     return history
 
-def add_task(title,priority="medium",due=None,tags=None):
+def add_task(title,priority=config["default_priority"],due=None,tags=None):
     data = load_data()
     save_undo_data(data)
     task_id=str(uuid.uuid4())[:8]
@@ -311,7 +312,7 @@ def search_task(keyword):
             else:
                 due_display=""
 
-            priority=task.get("priority","medium")
+            priority=task.get("priority",config["default_priority"])
             priority_colours={"high":Fore.LIGHTRED_EX,"medium":Fore.YELLOW,"low":Fore.GREEN}
             priority_coloured = priority_colours.get(priority, Fore.WHITE) + f"({priority})"
             tags = ", ".join(task.get("tags", []))
@@ -347,7 +348,7 @@ def main():
 
     add_parser=subparser.add_parser("add")
     add_parser.add_argument("title", nargs="+")
-    add_parser.add_argument("--priority",type=str,choices=["low","medium","high"],default="medium")
+    add_parser.add_argument("--priority",type=str,choices=["low","medium","high"],default=config["default_priority"])
     add_parser.add_argument("--due",help="Due date in YYYY-MM-DD format")
     add_parser.add_argument("--tag")
 
