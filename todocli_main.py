@@ -18,7 +18,6 @@ CONFIG_PATH = os.path.join(CONFIG_DIR, "config.json")
 DEFAULT_CONFIG = {
     "theme": "default",
     "date_format": "%Y-%m-%d",
-    "show_completed": True,
     "default_priority": "medium",
     "progress_bar": True,
     "color": True,
@@ -256,10 +255,10 @@ def stats_task():
             print(f"{tag:<18}: {Fore.LIGHTMAGENTA_EX}{count}")
     else:
         print("No tags found")
-
-    print(Fore.CYAN + "PROGRESS")
-    print("-" * 30)
-    print(f"[{bar}] {completion_rate:.1f}%")
+    if config["progress_bar"]==True:
+        print(Fore.CYAN + "PROGRESS")
+        print("-" * 30)
+        print(f"[{bar}] {completion_rate:.1f}%")
 
 def clear_completed():
     data=load_data()
