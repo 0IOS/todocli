@@ -270,7 +270,11 @@ todocli stats
 todocli/
 ├── todocli
 ├── todocli_main.py
-├── requirements.txt
+├── install.sh
+├── install.ps1
+├── todocli.cmd
+├── LICENCE
+├── requirement.txt
 ├── .gitignore
 └── README.md
 ```
